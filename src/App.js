@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import GameBoard from './GameBoard';
 
 class App extends Component {
   render() {
@@ -9,9 +9,9 @@ class App extends Component {
         <div className="App-header">
           <h2>Connect 4</h2>
         </div>
-        <p className="App-intro">
-          Hello World
-	</p>
+        <div>
+	  <GameBoard />
+	</div>
       </div>
     );
   }

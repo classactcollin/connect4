@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 function matrix( rows, cols, defaultValue){
   var arr = [];
   for(var i=0; i < rows; i++){
@@ -10,8 +12,7 @@ function matrix( rows, cols, defaultValue){
 return arr;
 }
 
-
-class Board {
+export default class GameLogic {
   constructor() {
   this.gameBoard = matrix(7,6,'0');
   this.player = _.sample(['x','y']);
@@ -23,14 +24,14 @@ class Board {
   }
   
   rotateTurn(){
-    this.player= this.player== 'x' ? 'y' : 'x';  
+    this.player= this.player=== 'x' ? 'y' : 'x';  
   }
   
   placeChip(row,token){
   var bottom=_.findIndex(this.gameBoard[row], function(char){ 
-    return char == 'x'|| char =='y'; })
-  if(bottom==-1){
-    this.gameBoard[row][this.gameBoard.length-1]=token
+    return char === 'x'|| char ==='y'; })
+  if(bottom===-1){
+    this.gameBoard[row][this.gameBoard.length-2]=token
     return true;
   }else if(bottom===0){
     console.log("Row full")
@@ -41,22 +42,8 @@ class Board {
   }
   }
     columnAvailable(column){
-  return _.map(gameBoard,_.first)[column]=='0';
+  return _.map(this.gameBoard,_.first)[column]==='0';
   
 
 }
 }
-
-var game1 = new Board()
-
-function action(array,column){
-  var slot =_.random(0, 6)
-
-  var goodTurn = game1.placeChip(slot,game1.player)
-  if (goodTurn){
-    console.log(game1.player+" has placed their token in row " + slot)
-    game1.rotateTurn();
-    
-  }
-  
-} 
