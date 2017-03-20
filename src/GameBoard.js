@@ -6,7 +6,7 @@ var _ = require('underscore');
 
 function WhoseTurn(props){
 	var color =  props.game.player=== 'x' ? 'red' : 'yellow'
-  return <h2 style={'color:' +color}>You are up {color}</h2>;
+  return <h2>You are up {color}</h2>;
 }
 
 function DisplayBoard(props){
