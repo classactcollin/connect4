@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GameLogic from './GameLogic';
-import TurnRow from './TurnRow';
 
 var _ = require('underscore');
 
