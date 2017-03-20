@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import GameLogic from './GameLogic';
+import TurnRow from './TurnRow';
+
 var _ = require('underscore');
 
 
@@ -8,12 +10,16 @@ function WhoseTurn(props){
 }
 
 function DisplayBoard(props){
-  var out=_.map(props.game.gameBoard, function(row){ 
-    return <td>{_.map(row, function(i){
-      return <tr>{i}</tr>
-    })}</td> 
-  })  
-  return <table>{out}</table>;
+  var out =_.map([0,1, 2,3,4,5], 
+  	function(num){ 
+  	return <div className="board-row">
+  		{_.map(props.game.gameBoard, function(row){
+  			return (<div className="square" id={'circle' +row[num]}></div>);})}
+  		</div> 
+  		}
+  		);
+  
+  return <div>{out}</div>;
 }
 
   
@@ -28,13 +34,16 @@ class GameBoard extends Component {
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
-      1000
+      3000
     );
   }
 
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
+  
+  rowSelector(row){
+}
 
   tick() {
     this.state.game.placeChip(_.random(0,6),this.state.game.player)
@@ -48,6 +57,7 @@ class GameBoard extends Component {
     return (
       <div>
         <WhoseTurn game={this.state.game}/>
+		
         <DisplayBoard game={this.state.game}/>
       </div>
     );
