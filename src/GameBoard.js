@@ -1,64 +1,75 @@
 import React, { Component } from 'react';
 import GameLogic from './GameLogic';
+import ButtonRow from './ButtonRow';
+import GameStatus from './GameStatus';
+import DisplayBoard from './DisplayBoard';
 
 var _ = require('underscore');
-
-
-function WhoseTurn(props){
-	var color =  props.game.player=== 'x' ? 'red' : 'yellow'
-  return <h2>You are up {color}</h2>;
-}
-
-function DisplayBoard(props){
-  var out =_.map([0,1, 2,3,4,5], 
-  	function(num){ 
-  	return <div className="board-row">
-  		{_.map(props.game.gameBoard, function(row){
-  			return (<div className="square" id={'circle' +row[num]}></div>);})}
-  		</div> 
-  		}
-  		);
-  
-  return <div>{out}</div>;
-}
 
   
 class GameBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-                 game: new GameLogic()
-                 };
+    	game: new GameLogic(),
+    	player: _.sample(['x','y']),
+    	winner: false
+    	};
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      3000
-    );
+
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
   }
   
-  rowSelector(row){
-}
-
-  tick() {
-    this.state.game.placeChip(_.random(0,6),this.state.game.player)
+  playTurn(column){
+  if(_.indexOf(this.state.game.columnAvailable(),column)===-1){
+  	alert("nope")
+  }else{
+  	
+    this.state.game.placeChip(column,this.state.player)
     
-    this.state.game.rotateTurn()
     this.setState({
-      game: this.state.game
-    });
+    	game: this.state.game
+    	});
+    	this.endTurn()
+    	}
   }
+  endTurn(){ 
+  if(this.state.game.checkWinner(this.state.player)){
+  	this.setState({winner:true})}else{
+  	this.rotateTurn()
+  	}
+  }
+  
+  rotateTurn(){
+    var newPlayer= this.state.player=== 'x' ? 'y' : 'x'; 
+    this.setState({
+    	player: newPlayer
+    	}); 
+  }
+
   render() {
+  
+  let availableColumns = this.state.game.columnAvailable()
+
     return (
       <div>
-        <WhoseTurn game={this.state.game}/>
-		
-        <DisplayBoard game={this.state.game}/>
+        <GameStatus 
+        	gameOver = {this.state.winner}
+        	currentPlayer = {this.state.player}
+        />
+
+		<ButtonRow
+			gameOver = {this.state.winner}
+			playTurn={(i) => this.playTurn(i)} 
+			availableColumns={availableColumns} 
+		/>
+        <DisplayBoard 
+        	game={this.state.game}
+        	/>
       </div>
     );
   }

@@ -18,6 +18,11 @@
   font-size: large;
 }
 
+table {
+    border-collapse:collapse;
+
+}
+
 .board-row:after {
   clear: both;
   content: "";
@@ -41,6 +46,20 @@
 .square:hover {
   background: blue;
 }
+.square2 {
+  background: green;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
 
 #circlex { width: 34px; 
   height: 34px; 
@@ -50,7 +69,4 @@
   height: 34px; 
   background: yellow; -moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+
