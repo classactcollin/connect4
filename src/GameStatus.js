@@ -12,16 +12,17 @@ class GameStatus extends Component {
 
   componentWillUnmount() {
   }
-	WhoseTurn(props){
-	var color =  props.game.player=== 'x' ? 'red' : 'yellow'
-  return <h2>You are up {color}</h2>;
+	currentPlayer(){
+		return this.props.currentPlayer=== 'x' ? 'Human' : 'AI'
 }
 
+
   render() {
+	
     return (
 	<div>
-	<div> {this.props.currentPlayer=== 'x' ? 'red' : 'yellow'} </div>
-	<div> {this.props.gameOver? ('Winner: '+ this.props.currentPlayer) : 'No winner yet'} </div>
+	<div> {this.currentPlayer()} </div>
+	<div> {this.props.gameOver? ('Winner: '+ this.currentPlayer()) : 'No winner yet'} </div>
 	</div>
 
 )

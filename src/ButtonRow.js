@@ -33,6 +33,7 @@ constructor(props) {
   render() {
   	let buttons=this.renderButtons(this.props.gameOver)
   	
+  	
 	return (
 	<tr>
 		

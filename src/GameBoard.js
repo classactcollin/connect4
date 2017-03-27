@@ -3,6 +3,8 @@ import GameLogic from './GameLogic';
 import ButtonRow from './ButtonRow';
 import GameStatus from './GameStatus';
 import DisplayBoard from './DisplayBoard';
+import * as AITurn from './aiTurn'
+//import TurnHistory from './TurnHistory';
 
 var _ = require('underscore');
 
@@ -13,57 +15,60 @@ class GameBoard extends Component {
     this.state = {
     	game: new GameLogic(),
     	player: _.sample(['x','y']),
-    	winner: false
+    	winner: false,
+    	turnHisory: []
     	};
   }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-  }
   
-  playTurn(column){
-  if(_.indexOf(this.state.game.columnAvailable(),column)===-1){
-  	alert("nope")
-  }else{
-  	
-    this.state.game.placeChip(column,this.state.player)
-    
-    this.setState({
-    	game: this.state.game
-    	});
-    	this.endTurn()
-    	}
+  
+componentWillMount(){
+  	if(this.state.player==='y' && this.state.winner===false){
+  	this.state.game.gameStatus()
+  	let aiTurn=AITurn.aiTurn(this.state.game)
+  	this.playTurn(aiTurn)
+  	}
+  
   }
-  endTurn(){ 
-  if(this.state.game.checkWinner(this.state.player)){
-  	this.setState({winner:true})}else{
-  	this.rotateTurn()
+
+  
+componentDidUpdate() {
+	if(this.state.player==='y' && this.state.winner===false){
+	console.log("Update")
+	this.state.game.gameStatus()
+  	let aiTurn=AITurn.aiTurn(this.state.game)
+  	this.playTurn(aiTurn)
   	}
   }
+
   
-  rotateTurn(){
-    var newPlayer= this.state.player=== 'x' ? 'y' : 'x'; 
-    this.setState({
-    	player: newPlayer
-    	}); 
+  playTurn(column){
+  let currentPlayer=this.state.player
+    this.state.game.placeChip(column,currentPlayer)
+    let newState=this.state.game
+    let winner = newState.checkWinner(currentPlayer)
+    newState.winner=winner
+    var newPlayer= currentPlayer
+    if(!winner){
+    	newState.player= currentPlayer=== 'x' ? 'y' : 'x';
+    }
+    this.setState(newState);
   }
 
   render() {
   
+  
   let availableColumns = this.state.game.columnAvailable()
-
+  console.log("Render")
+  this.state.game.gameStatus()
     return (
       <div>
         <GameStatus 
-        	gameOver = {this.state.winner}
-        	currentPlayer = {this.state.player}
+        	gameOver={this.state.winner}
+        	currentPlayer={this.state.player}
         />
 
 		<ButtonRow
-			gameOver = {this.state.winner}
+			gameOver={this.state.winner}
 			playTurn={(i) => this.playTurn(i)} 
 			availableColumns={availableColumns} 
 		/>

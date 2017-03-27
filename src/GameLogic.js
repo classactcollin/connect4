@@ -40,8 +40,7 @@ export default class GameLogic {
   }
   
   columnAvailable(){
-	var out= new Array(7)
-	console.log("Board",this.gameBoard)	
+	var out= []
   _.map(this.gameBoard, function(col, index) {if (col.length<6) {out.push(index)}}) 
     
   return out; 
@@ -50,7 +49,7 @@ export default class GameLogic {
 
 checkWinner(player) {
 var b = this.displayBoard()
-console.log("Display",b)
+
     var len=b.length, r=0, c=0, dr=0, dl=0, win=4
 
     for(var i=0;i<len;i++){
