@@ -61,6 +61,21 @@ table {
   width: 34px;
 }
 
+.triangle-down { 
+  width: 0; 
+  height: 0; 
+  border-left: 17px solid transparent; 
+  border-right: 17px solid transparent; 
+  border-top: 34px solid red; 
+}
+.triangle-down-off { 
+  width: 0; 
+  height: 0; 
+  border-left: 17px solid transparent; 
+  border-right: 17px solid transparent; 
+  border-top: 34px solid #1f2224; 
+}
+
 #circlex { width: 34px; 
   height: 34px; 
   background: red; -moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px; }

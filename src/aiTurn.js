@@ -6,7 +6,6 @@ import GameLogic from './GameLogic';
 export function aiTurn(game){
 let availableColumns=game.columnAvailable()
 let choice = _.sample(availableColumns)
-console.log('AvailCols',availableColumns)
 let optionsLose = []
 let optionsWin = []
 _.map(availableColumns, 
@@ -16,8 +15,7 @@ _.map(availableColumns,
 		if(testNextWinnerWin(game,col,'x')){optionsLose.push(col)}
 		if(testNextWinnerWin(game,col,'y')){optionsWin.push(col)}
 	})
-console.log("LOSE "+optionsLose)
-console.log("WIN "+optionsWin)
+
 	if (optionsWin.length >0){
 		return _.sample(optionsWin)	
 }else if(optionsLose.length >0){

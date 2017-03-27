@@ -18,12 +18,18 @@ class GameBoard extends Component {
     	winner: false,
     	turnHisory: []
     	};
+    this.baseState = {
+    	game: new GameLogic(),
+    	player: _.sample(['x','y']),
+    	winner: false,
+    	turnHisory: []
+    	}; 
   }
   
   
 componentWillMount(){
   	if(this.state.player==='y' && this.state.winner===false){
-  	this.state.game.gameStatus()
+
   	let aiTurn=AITurn.aiTurn(this.state.game)
   	this.playTurn(aiTurn)
   	}
@@ -33,11 +39,13 @@ componentWillMount(){
   
 componentDidUpdate() {
 	if(this.state.player==='y' && this.state.winner===false){
-	console.log("Update")
-	this.state.game.gameStatus()
   	let aiTurn=AITurn.aiTurn(this.state.game)
   	this.playTurn(aiTurn)
   	}
+  }
+  
+  resetGame = () => {
+    this.setState(this.baseState)
   }
 
   
@@ -47,7 +55,6 @@ componentDidUpdate() {
     let newState=this.state.game
     let winner = newState.checkWinner(currentPlayer)
     newState.winner=winner
-    var newPlayer= currentPlayer
     if(!winner){
     	newState.player= currentPlayer=== 'x' ? 'y' : 'x';
     }
@@ -58,14 +65,14 @@ componentDidUpdate() {
   
   
   let availableColumns = this.state.game.columnAvailable()
-  console.log("Render")
-  this.state.game.gameStatus()
+
     return (
       <div>
         <GameStatus 
         	gameOver={this.state.winner}
         	currentPlayer={this.state.player}
         />
+         <button onClick={this.resetGame}>Reset</button>
 
 		<ButtonRow
 			gameOver={this.state.winner}
