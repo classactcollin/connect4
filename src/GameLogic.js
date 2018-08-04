@@ -51,6 +51,7 @@ checkWinner(player) {
 var b = this.displayBoard()
 
     var len=b.length, r=0, c=0, dr=0, dl=0, win=4
+    debugger;
 
     for(var i=0;i<len;i++){
         for(var j=0;j<len;j++){
@@ -62,7 +63,12 @@ var b = this.displayBoard()
         			(b[i+z][j-z]===player) ? dl++ : dl=0;
         		}
         	}
-			if(c===win || r===win || dr===win || dl===win){return true;}
+			if(c===win || r===win || dr===win || dl===win){
+        console.log("r",r)
+        console.log("dr",dr)
+        console.log("dl",dl)
+        console.log("c",c)
+        return true;}
 		} r=0;
     }
     return false
