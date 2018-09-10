@@ -54,7 +54,7 @@ var b = this.displayBoard()
     debugger;
 
     for(var i=0;i<len;i++){
-        for(var j=0;j<len;j++){
+        for(var j=0;j<(len-1);j++){
             (b[j][i]===player) ? c++ : c=0;
             (b[i][j]===player) ? r++ : r=0;
         	if(b[i][j]===player && i<len-win+1){ dr=0; dl=0;

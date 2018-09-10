@@ -20,7 +20,7 @@ constructor(props) {
   	let buttons=_.map([0,1,2,3,4,5,6], function(col){
   	if(deactivate || _.indexOf(that.props.availableColumns,col)===-1){
   	return (<th className="triangle-down-off" />)}else{
-  			return (<th onClick={(i) => that.handleClick(col)} className="triangle-down" />)
+  			return (<th key={col} onClick={(i) => that.handleClick(col)} className="triangle-down" />)
   			}
   		})
   		

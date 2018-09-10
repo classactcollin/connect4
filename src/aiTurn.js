@@ -1,5 +1,6 @@
-var _ = require('underscore');
 import GameLogic from './GameLogic';
+var _ = require('underscore');
+
 
 
 
